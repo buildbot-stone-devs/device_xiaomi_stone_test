@@ -112,6 +112,16 @@ BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)-kernel/dtb
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)-kernel/kernel:kernel
 
+# Kernel modules
+VENDOR_MODULES_PATH := $(DEVICE_PATH)-kernel/vendor-modules
+RAMDISK_MODULES_PATH := $(DEVICE_PATH)-kernel/ramdisk-modules/5.4-gki
+
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(VENDOR_MODULES_PATH)/*.ko)
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(patsubst %,$(VENDOR_MODULES_PATH)/%,$(shell cat $(VENDOR_MODULES_PATH)/modules.load))
+
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(RAMDISK_MODULES_PATH)/*.ko)
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load))
+
 # OTA assert
 TARGET_OTA_ASSERT_DEVICE := moonstone,sunstone,stone
 
